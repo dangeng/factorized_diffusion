@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Optical illusions by factorizing diffusion models.">
+  <meta name="keywords" content="Diffusion, Illusions, Optical Illusions">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Factorized Diffusion</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8P4QSMJ1ZN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-8P4QSMJ1ZN');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!--<link rel="icon" href="./static/images/favicon.svg">-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Factorized Diffusion: Perceptual<br>Illusions by Noise Decomposition</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://dangeng.github.io" target="_blank">Daniel Geng*</a>,</span>
+            <span class="author-block">
+              <a href="https://inbumpark.github.io/" target="_blank">Inbum Park*</a>,</span>
+            <span class="author-block">
+              <a href="https://andrewowens.com" target="_blank">Andrew Owens</a></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">University of Michigan</span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block">Correspondence to: <span class='rev'>ude.hcimu@gnegd</span></span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href=""
+                   target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/dangeng/visual_anagrams"
+                   target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Colab Link. -->
+              <!--<span class="link-block">
+                <a href=""
+                   target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-book"></i>
+                  </span>
+                  <span>Colab</span>
+                  </a>
+              </span>-->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HYBRID GRID -->
+<section class="section">
+  <div class="container">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3" id="hybrid">Hybrid Images</h2>
+          <div class="content has-text-justified">
+            <p>
+              Hybrid images change appearance depending on the distance 
+              (or size) at which they are viewed. Here are some examples
+              synthesized using our method, where we condition low frequencies
+              on one prompt and high frequencies on another.
+            </p>
+            <p>
+              <b><i>Note these videos may not be 
+              optimized for your device or screen size. Try zooming in, 
+              standing a few feet away from the screen, or squinting if 
+              you can't see the image.</i></b>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <video class="grid-video" autoplay muted loop playsinline>
+        <source src="./static/videos/hybrid/rabbit.man.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+    <div class="columns is-centered">
+      <video class="grid-video" autoplay muted loop playsinline>
+        <source src="./static/videos/hybrid/waterfalls.pig.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+    <div class="columns is-centered">
+      <video class="grid-video" autoplay muted loop playsinline>
+        <source src="./static/videos/hybrid/houseplants.skull.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- TRIPLE HYBRID GRID -->
+<section class="section">
+  <div class="container">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3" id="triple">Triple Hybrid Images</h2>
+          <div class="content has-text-justified">
+            <p>
+              By decomposing an image with a Laplacian pyramid, and conditioning
+              each level of the pyramid with a different prompt, we can also produce 
+              hybrid images with three different contents.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <video class="grid-video" autoplay muted loop playsinline>
+        <source src="./static/videos/triple/waterfall.skull.yinyang.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+    <div class="columns is-centered">
+      <video class="grid-video" autoplay muted loop playsinline>
+        <source src="./static/videos/triple/flowers.rabbit.pyramid.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- CHROMATIC STEGANOGRAPHS GRID -->
+<section class="section">
+  <div class="container">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3" id="colorization">Chromatic Steganography</h2>
+          <div class="content has-text-justified">
+            <p>
+              By decomposing an image into a greyscale component and a color 
+              component, we can create images that change appearance when
+              colorized.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <video class="grid-video" autoplay muted loop playsinline>
+        <source src="./static/videos/colorization/landscape.tiger.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+    <div class="columns is-centered">
+      <video class="grid-video" autoplay muted loop playsinline>
+        <source src="./static/videos/colorization/volcano.rabbit.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- MOTION BLUR GRID -->
+<section class="section">
+  <div class="container">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3" id="motion">Motion Blurring</h2>
+          <div class="content has-text-justified">
+            <p>
+              We can also create images that change appearance under motion
+              blurring.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <video class="grid-video" autoplay muted loop playsinline>
+        <source src="./static/videos/motion/rabbit.duck.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- INVERSE GRID -->
+<section class="section">
+  <div class="container">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3" id="inverse">Inverse Problems</h2>
+          <div class="content has-text-justified">
+            <p>
+              By holding one component constant and synthesizing the others, our method can be used to solve 
+              inverse problems.
+            </p>
+            <p>
+              For example, below we take the low frequency component from
+              the photograph of Einstein, and generate the high frequency component.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <video class="grid-video" style="max-width:1200px;" autoplay muted loop playsinline>
+        <source src="./static/videos/inverse/inverse.waterfall.einstein.withref.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+    <div class="container is-max-desktop" style="margin-top: 3rem; margin-bottom: 3rem;">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="content has-text-justified">
+            <p>
+              We can also take the luminance component from a grayscale image
+              and synthesize the color component, resulting in a colorization method.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <img src="./static/images/colorization.png" class="center-img" style="margin-bottom: 1.5rem;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</body>
+</html>

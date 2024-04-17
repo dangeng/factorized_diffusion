@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Optical illusions by factorizing diffusion models.">
+  <meta name="keywords" content="Diffusion, Illusions, Optical Illusions">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Factorized Diffusion</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMFYPEJR08"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-MMFYPEJR08');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.png" type="image/png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Enable smooth scrolling for only main page -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Factorized Diffusion: Perceptual<br>Illusions by Noise Decomposition</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://dangeng.github.io" target="_blank">Daniel Geng*</a>,</span>
+            <span class="author-block">
+              <a href="https://inbumpark.github.io/" target="_blank">Inbum Park*</a>,</span>
+            <span class="author-block">
+              <a href="https://andrewowens.com" target="_blank">Andrew Owens</a></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">University of Michigan</span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block">Correspondence to: <span class='rev'>ude.hcimu@gnegd</span></span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href=""
+                   target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/dangeng/visual_anagrams"
+                   target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Colab Link. -->
+              <!--<span class="link-block">
+                <a href=""
+                   target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-book"></i>
+                  </span>
+                  <span>Colab</span>
+                  </a>
+              </span>-->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEASER + INTRO -->
+<section class="hero teaser">
+  <h2 class="subtitle has-text-centered">
+    <b>tl;dr:</b> We can control <i>components</i> of generated <br> images with a pretrained diffusion model.
+    We <br> use this to generate various perceptual illusions.
+  </h2>
+
+  <h2 class="title is-3" style="margin-top: 30px;" id="hybrid">Hybrid Images</h2>
+  <section class="section" style="padding: 0rem 1.5rem 2rem 1.5rem;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-three-fifths">
+          <div class="content has-text-justified">
+            <p>
+              Our method can produce hybrid images, which change appearance 
+              depending on the distance (or size) at which they are viewed. 
+              These images were first proposed 
+              by Oliva <em>et al.</em> <a id="ref1back" href="#ref1">[1]</a>.
+              We do this by conditioning low and high frequency components
+              with different text prompts.
+              For more examples, please see our <a href="./hybrid.html">hybrid images gallery</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="is-centered is-max-desktop teaser-video-container">
+    <video class="teaser-video" style="padding: 20px 20px 0px 20px;" autoplay muted loop playsinline>
+      <source src="./static/videos/teaser/teaser.hybrid.mp4"
+              type="video/mp4">
+    </video>
+  </div>
+
+  <h2 class="title is-3" style="margin-top: 30px;" id="colorization">Color Hybrids</h2>
+  <section class="section" style="padding: 0rem 1.5rem 2rem 1.5rem;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-three-fifths">
+          <div class="content has-text-justified">
+            <p>
+              Our method can also make what we call <em>color hybrids</em>: images 
+              that change appearance when color is added or subtracted.
+              Interestingly, because the human eye cannot see color under dim 
+              lighting, there is a physical mechanism for this illusion—these
+              images change appearance when taken from a brightly lit 
+              environment to a dimly lit one. These images are generated by
+              conditioning grayscale and color components on differnt prompts.
+              For more examples, please see our <a href="./color.html">color hybrids gallery</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="is-centered is-max-desktop teaser-video-container">
+    <video class="teaser-video" autoplay muted loop playsinline>
+      <source src="./static/videos/teaser/teaser.color.mp4"
+              type="video/mp4">
+    </video>
+  </div>
+
+  <h2 class="title is-3" style="margin-top: 30px;" id="motion">Motion Hybrids</h2>
+  <section class="section" style="padding: 0rem 1.5rem 2rem 1.5rem;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-three-fifths">
+          <div class="content has-text-justified">
+            <p>
+              We can also make images that change appearance when
+              motion blurred, which we call <em>motion hybrids</em>.
+              To make these, we condition a motion blurred component on
+              one prompt, and the residual component on another. Note in 
+              the below visualizations we synthetically add motion blur.
+              For more examples, please see our <a href="./motion.html">motion hybrids gallery</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="is-centered is-max-desktop teaser-video-container">
+    <video class="teaser-video" autoplay muted loop playsinline>
+      <source src="./static/videos/teaser/teaser.motion.mp4"
+              type="video/mp4">
+    </video>
+  </div>
+
+  <h2 class="title is-3" style="margin-top: 30px;" id="inverse">Hybrids from Real Images</h2>
+  <section class="section" style="padding: 0rem 1.5rem 2rem 1.5rem;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-three-fifths">
+          <div class="content has-text-justified">
+            <p>
+              In addition, we can make hybrid images from real images. We do 
+              this by taking high or low pass components from a real image, 
+              and generating the missing component. Effectively, this is a method 
+              to solve inverse problems, <a href="#inverse_disc">which discuss in more detail below</a>.
+              For more examples, please see our <a href="./inverse.html">inverse hybrids gallery</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="is-centered is-max-desktop teaser-video-container">
+    <video class="teaser-video" autoplay muted loop playsinline>
+      <source src="./static/videos/teaser/teaser.inverse.mp4"
+              type="video/mp4">
+    </video>
+  </div>
+
+  <h2 class="title is-3" style="margin-top: 30px;" id="triple">Triple Hybrids</h2>
+  <section class="section" style="padding: 0rem 1.5rem 2rem 1.5rem;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-three-fifths">
+          <div class="content has-text-justified">
+            <p>
+              Finally, we can make hybrid images with three different interpretations
+              by conditioning three different 
+              levels of a Laplacian pyramid on different prompts. We found that 
+              this was fairly difficult to do, and required 
+              manually hand tuning the Laplacian pyramid parameters. If you have difficulty seeing the prompts please 
+              try zooming in and out, or stepping a couple meters away from 
+              the screen. 
+              For more examples, please see our <a href="./inverse.html">triple hybrids gallery</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="is-centered is-max-desktop teaser-video-container">
+    <video class="teaser-video" autoplay muted loop playsinline>
+      <source src="./static/videos/teaser/teaser.triple.mp4"
+              type="video/mp4">
+    </video>
+  </div>
+</section>
+
+
+<!-- OVERVIEW -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Overview</h2>
+        <div class="content has-text-justified">
+          <p class="overview">
+            Given a factorization of an image into a sum of components, we present 
+            a zero-shot method to independently control these components through 
+            diffusion model sampling. For example, decomposing an image into 
+            low and high spatial frequencies, and then prompting these components 
+            on different text prompts 
+            <a href="#hybrid">allows us to produce hybrid images</a>. 
+            A decomposition into grayscale and color components results in 
+            <a href="#colorization"> 
+            images that change appearance when colored is added or subtracted</a>. We also show
+            how to make  
+            <a href="#motion">perceptual illusions involving motion blur</a> and 
+            <a href="#triple"> hybrid images with three prompts</a>. 
+            Finally, by holding one component constant while
+            generating the other components we can <a href="#inverse">create hybrid images from real images.</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- METHOD -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered" id="method">Method</h2>
+        <div class="content has-text-justified">
+          <p>
+            Given an <b><span style="color: rgb(255, 100, 90);">image decomposition</span></b>,
+            we control components of the decomposition through text conditioning during image generation. 
+            To do this, we modify the sampling procedure of a pretrained diffusion model. 
+            Specifically, at each denoising step, \( t \), we construct a 
+            <b><span style="color: rgb(41, 177, 255);">new noise estimate</span></b>, \(\tilde\epsilon\),
+            to use for denoising, whose components <b><span style="color: rgb(255, 147, 0);">come from components of</span></b>
+            \(\epsilon_i\), which are noise estimates conditioned on different prompts. Here, we show a 
+            decomposition into three frequency subbands, used for creating triple 
+            hybrid images, but we consider a number of other decompositions, which we explain below.
+          </p>
+          <img src="./static/images/method.jpg" class="center-img" style="margin-bottom: 3rem; margin-top: 3rem;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DECOMPOSITION -->
+<section class="section" id="decompositions">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered" id="method">Decompositions</h2>
+        <div class="content has-text-justified">
+          <p>
+            In order to use our method we need to find image decompositions of the form \( \mathbf{x} = \sum f_i(\mathbf{x}) \).
+            Below, we briefly describe the decompositions that we consider, and what kinds of images they produce.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+
+      <div class="column is-two-fifths">
+        <div class="content">
+          <h2 class="title is-5">Hybrid Decomposition</h2>
+          <p>
+            To make <a href="#hybrid">hybrid images</a>, we can decompose an image into high and low frequency components. 
+            We use a low pass filter, implemented as a Gaussian blur,
+            \( G_\sigma \), with standard deviation \( \sigma \) as one 
+            component, and we take the residual high pass as the other component.
+
+            \[ \begin{aligned}  
+              \mathbf{x} = \underbrace{\mathbf{x} - G_\sigma(\mathbf{x})}_{f_\text{high}(\mathbf{x})} + \underbrace{G_\sigma(\mathbf{x})}_{f_\text{low}(\mathbf{x})}
+            \end{aligned} \]
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-two-fifths">
+        <div class="content">
+          <h2 class="title is-5">Triple Hybrid Decomposition</h2>
+          <p>
+            To make <a href="#triple">triple hybrid images</a> we decompose an 
+            image as a three layer Laplacian pyramid where we use two 
+            Gaussian blurs of standard deviation
+            \(\sigma_1\) and \(\sigma_2\). 
+
+            \[ \begin{aligned}  
+              \mathbf{x} &= 
+              \underbrace{G_{\sigma_1}(\mathbf{x}) - G_{\sigma_2}(G_{\sigma_1}(\mathbf{x}))}_{f_\text{med}(\mathbf{x})} \;+ \\
+              &\underbrace{\mathbf{x} - G_{\sigma_1}(\mathbf{x})}_{f_\text{high}(\mathbf{x})} + 
+              \underbrace{G_{\sigma_2}(G_{\sigma_1}(\mathbf{x}))}_{f_\text{low}(\mathbf{x})}
+            \end{aligned} \]
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns is-centered">
+
+      <div class="column is-two-fifths">
+        <div class="content">
+          <h2 class="title is-5">Color Space Decomposition</h2>
+          <p>
+            To make <a href="#colorization">color hybrids</a>, we take the 
+            grayscale image as one component, and the residual as the color component.
+
+            \[ \begin{aligned}  
+                  f_\text{gray}(\mathbf{x}) &= \frac{1}{3} \sum_c \mathbf{x}_c \\
+                  f_\text{color}(\mathbf{x}) &= \mathbf{x} - f_\text{gray}(\mathbf{x})
+            \end{aligned} \]
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-two-fifths">
+        <div class="content">
+          <h2 class="title is-5">Motion Blur Decomposition</h2>
+          <p>
+            For a motion blur kernel, \( \mathbf{K} \), we can decompose an 
+            image into a blurred component and a residual component. 
+
+            \[ \begin{aligned}  
+                  \mathbf{x} = \underbrace{\mathbf{K}*\mathbf{x}}_{f_\text{motion}(\mathbf{x})} + \;\; \underbrace{\mathbf{x} - \mathbf{K}*\mathbf{x}}_{f_\text{res}(\mathbf{x})},
+            \end{aligned} \]
+
+            where \( * \) denotes convolution. This allows us to make <a href="#motion">motion hybrids</a>.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns is-centered">
+
+      <div class="column is-two-fifths">
+        <div class="content">
+          <h2 class="title is-5">Spatial Decomposition</h2>
+          <p>
+            Given \( N \) binary spatial masks, \( \mathbf{m_i} \), whose
+            disjoint union covers the entire image, we can partition the
+            image into regions with the decomposition
+
+            \[ \begin{aligned}  
+                  \mathbf{x} = \sum_i \underbrace{\mathbf{m}_i \odot \mathbf{x}}_{f_i(\mathbf{x})},
+            \end{aligned} \]
+
+            where \( \odot \) denotes element-wise multiplication. The effect
+            of this is to enable spatial control of prompts, and is a special case of MultiDiffusion <a id="ref2back" href="#ref2">[2]</a>.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-two-fifths">
+        <div class="content">
+          <h2 class="title is-5">Scaling Decomposition</h2>
+          <p>
+            We may also decompose an image as 
+            
+            \[ \begin{aligned}  
+              \mathbf{x} = \sum_i^N a_i\mathbf{x}
+            \end{aligned} \]
+
+            for \( \sum_i^N a_i = 1 \). Setting \( a_i = \frac{1}{N} \)
+            recovers exactly the compositional method of Liu <em>et al.</em> <a id="ref3back" href="#ref3">[3]</a>, and allows us to
+            produce images that align with multiple prompts. 
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</section>
+
+<!-- CONDITIONS -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Why does this work?</h2>
+        <div class="content has-text-justified">
+          <p>
+            Diffusion models update noisy images, \(\mathbf{x}_t\), to less 
+            noisy images, \(\mathbf{x}_{t-1}\), with an \(\texttt{update}(\cdot,\cdot)\) function<a href="#footnote1"><sup>1</sup></a>.
+            Commonly used update functions include DDPM and DDIM, and are 
+            linear combinations of the noisy image, \(\mathbf{x}_t\), and 
+            the noise estimate \(\epsilon_\theta\).<a href="#footnote2"><sup>2</sup></a>
+            That is, these updates can be written as
+
+            \[ \begin{aligned} \mathbf{x}_{t-1} &= \texttt{update}(\mathbf{x}_t, \epsilon_\theta) \\ &=\omega_t \mathbf{x}_t + \gamma_t \epsilon_\theta \end{aligned} \]
+
+            where \(\omega_t\) and \(\gamma_t\) are determined by the variance schedule and the scheduler. Then given a decomposition \( \mathbf{x} = \sum f_i(\mathbf{x}) \), this
+            means the update rule can be decomposed into a sum of updates on <i>components</i>:
+
+            <!--\[ \begin{aligned} \mathbf{x}_{t-1} &= \texttt{update}(\mathbf{x}_t, \epsilon) \\ &=\omega_1^t \mathbf{x}_t + \omega_2^t \epsilon \\ &= \omega_1^t \sum_i f_i(\mathbf{x}_t) + \omega_2^t \sum_i f_i(\epsilon) \\ &= \sum_i \left[ \omega_1^t f_i(\mathbf{x}_t) + \omega_2^t f_i(\epsilon) \right] \\ &= \sum_i \texttt{update}(f_i(\mathbf{x}_t), f_i(\epsilon)) \end{aligned} \]-->
+            \[ \begin{aligned} \mathbf{x}_{t-1} &= \texttt{update}(\mathbf{x}_t, \epsilon) \\ &= \texttt{update}\left( \sum f_i(\mathbf{x}_t), \sum f_i(\epsilon) \right) \\ &= \sum_i \texttt{update}(f_i(\mathbf{x}_t), f_i(\epsilon)) \end{aligned} \]
+
+            where the last equality is by linearity of \( \texttt{update}(\cdot,\cdot) \). 
+            Our method can be understood as conditioning each of these 
+            components on a different text prompt. Written explicitly, 
+            for text prompts \( y_i \) our method is
+
+            \[ \begin{aligned} \mathbf{x}_{t-1} = \sum_i \texttt{update}(f_i(\mathbf{x}_t), f_i(\epsilon(\mathbf{x}_t, y_i, t))). \end{aligned} \]
+
+            Moreover, if the \( f_i \)'s are linear then we have
+
+            \[ \begin{aligned}  
+              f_i(\mathbf{x}_{t-1}) &= f_i(\texttt{update}(\mathbf{x}_t, \epsilon)) \\
+              &= f_i(\omega_t\mathbf{x}_t + \gamma_t\epsilon_\theta) \\
+              &= \omega_t f_i(\mathbf{x}_t) + \gamma_t f_i(\epsilon_\theta) \\
+              &= \texttt{update}(f_i(\mathbf{x}_t), f_i(\epsilon_\theta)),
+            \end{aligned} \]
+
+            meaning that updating using the \(i\)th component of 
+            \(\mathbf{x}_t\) with the \(i\)th component of \(\epsilon_\theta\) will only affect 
+            the \(i\)th component of \(\mathbf{x}_{t-1}\).
+          </p>
+          <p style="font-size: 0.7em; margin-left: 2em;" id="footnote1">
+            <sup>1</sup>The update function also depends on \(t\), which we omit for brevity.
+          </p>
+          <p style="font-size: 0.7em; margin-left: 2em;" id="footnote2">
+            <sup>2</sup>Noise of the form \( \mathbf{z}\sim\mathcal{N}(0,\mathbf{I}) \) is also often added, which can be safely ignored. Please see the paper for details.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- INVERSE DISCUSSION -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered" id="inverse_disc">Inverse Problems</h2>
+        <div class="content has-text-justified">
+          <p>
+            If we know what one of the components must be, perhaps from some 
+            reference image \( \mathbf{x}_\text{ref} \), then we can hold that 
+            component constant while generating the other components. In practice we
+            do this by reprojecting the noisy image \( \mathbf{x}_t \) at every time 
+            step:
+            
+            \[  \mathbf{x}_t \gets f_1\left(\sqrt{\alpha_t}\mathbf{x}_\text{ref} + \sqrt{1 - \alpha_t}\epsilon\right) + \sum_{i=2}^N f_i(\mathbf{x}_t)   \]
+            
+            This is effectively 
+            a way to solve (noiseless) inverse problems, with forward model 
+            \( \mathbf{y} = f_1(\mathbf{x}) \), and can be seen as a rudimentary 
+            version of prior work
+            <a id="ref4back" href="#ref4">[4]</a><a id="ref5back" href="#ref5">[5]</a><a id="ref6back" href="#ref6">[6]</a><a id="ref7back" href="#ref7">[7]</a>.
+            We apply this approach to generating hybrid images from real images,
+            which we <a href="#inverse">show above</a>, and in a 
+            <a href="./inverse.html">gallery of results</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- INVERSE DISCUSSION -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered" id="inverse_disc">Limitations and Random Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            One major limitation of our method is that the success rate is 
+            relatively low. Very high quality images are fairly hard to come 
+            by, and sometimes one prompt dominates the image. 
+            We attribute this fragility to the fact that our method produces 
+            images that are highly out-of-distribution for the diffusion model. 
+            In addition, there is no mechanism by which prompts associated 
+            with one component are discouraged from appearing in other 
+            components. Empirically, the success rate of our method 
+            can be improved by carefully choosing prompt pairs or by manually 
+            tuning decomposition parameters, but we leave improving the 
+            robustness of our method in general to future work. We show random
+            results for selected prompt pairs below. Many more random results 
+            can be found in our paper.
+          </p>
+          <img src="./static/images/random.jpg" class="center-img" style="margin-top: 3rem;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Concurrent Work. -->
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            This project is related to a number of other works, including:
+          </p>
+          <p>
+            <a href="https://www.reddit.com/r/StableDiffusion/comments/16ew9fz/spiral_town_different_approach_to_qr_monster/" target="_blank">Recent work by a pseudonymous artist</a>, 
+            Ugleh, uses a Stable Diffusion model finetuned for generating QR 
+            codes to produce images whose global structure subtly matches 
+            a given template image. These images can effectively act as hybrid 
+            images. A demo of this approach can be found 
+            <a href="https://huggingface.co/spaces/AP123/IllusionDiffusion" target="_blank">here</a>.
+          </p>
+          <p>
+            <a href="https://github.com/tancik/Illusion-Diffusion" target="_blank">Work</a> by 
+            <a href="https://www.matthewtancik.com/about-me" target="_blank">Matthew Tancik</a>,
+            and our prior work, <a href="https://dangeng.github.io/visual_anagrams/" target="_blank">Visual Anagrams</a>,
+            show how to make illusions by denoising multiple views of an image simultaneously. 
+            These methods work by transforming the inputs to the diffusion model, while
+            factorized diffusion modifies the outputs of the diffusion model,
+            producing a different class of illusions.
+          </p>
+          <p>
+            Another approach to making illusions with diffusion models is to use score distillation
+            sampling, which is done in <a href="https://diffusionillusions.com/" target="_blank">Diffusion Illusions</a>, 
+            by <a href="https://ryanndagreat.github.io/" target="_blank">Ryan Burgert</a> <i>et al.</i>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Concurrent Work. -->
+
+  </div>
+</section>
+
+
+<!-- References -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-justified">
+      <div class="column is-full-width">
+        <h2 class="title is-3" id="additional">References</h2>
+        <p id="ref1">[1] Oliva <em>et al.</em>, “<a href="https://stanford.edu/class/ee367/reading/OlivaTorralb_Hybrid_Siggraph06.pdf" target="_blank">Hybrid Images</a>”, TOG, 2006. <a href="#ref1back">↩</a></p>
+        <p id="ref2">[2] Bar-Tal <em>et al.</em>, “<a href="https://arxiv.org/abs/2302.08113" target="_blank">MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation</a>”, ICML, 2023. <a href="#ref2back">↩</a></p>
+        <p id="ref3">[3] Liu <em>et al.</em>, “<a href="https://arxiv.org/abs/2206.01714" target="_blank">Compositional Visual Generation with Composable Diffusion Models</a>”, ECCV, 2022. <a href="#ref3back">↩</a></p>
+        <p id="ref4">[4] Song <em>et al.</em>, “<a href="https://arxiv.org/abs/2011.13456" target="_blank">Score-Based Generative Modeling through Stochastic Differential Equations</a>”, ICLR, 2021. <a href="#ref4back">↩</a></p>
+        <p id="ref5">[5] Chung <em>et al.</em>, “<a href="https://arxiv.org/abs/2112.05146" target="_blank">Come-Closer-Diffuse-Faster: Accelerating Conditional Diffusion Models for Inverse Problems through Stochastic Contraction</a>”, CVPR, 2022. <a href="#ref5back">↩</a></p>
+        <p id="ref6">[6] Kawar <em>et al.</em>, “<a href="https://arxiv.org/abs/2201.11793" target="_blank">Denoising Diffusion Restoration Models</a>”, NeurIPS, 2022. <a href="#ref6back">↩</a></p>
+        <p id="ref7">[7] Lugmayr <em>et al.</em>, “<a href="https://arxiv.org/abs/2201.09865" target="_blank">RePaint: Inpainting using Denoising Diffusion Probabilistic Models</a>”, CVPR, 2022. <a href="#ref7back">↩</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><!--<code>@article{geng2023visualanagrams,
+  title     = {Visual Anagrams: Generating Multi-View Optical Illusions with Diffusion Models},
+  author    = {Geng, Daniel and Park, Inbum and Owens, Andrew},
+  journal   = {arXiv:2311.17919},
+  year      = {2023},
+  month     = {November},
+  abbr      = {Preprint},
+  url       = {https://arxiv.org/abs/2311.17919},
+}</code>--></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a 
+            <a rel="license" 
+            href="http://creativecommons.org/licenses/by-sa/4.0/"
+            target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>, 
+            and is written by <a href="https://keunhong.com/" target="_blank">
+            Keunhong Park</a> for the <a href="https://nerfies.github.io/" 
+            target="_blank">Nerfies</a> project. You are free to use the 
+            <a href="https://github.com/nerfies/nerfies.github.io"
+            target="_blank">source code</a> of this website,
+            but please keep these links in the footer, 
+            as requested by the authors.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
