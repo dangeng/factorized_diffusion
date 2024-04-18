@@ -152,6 +152,26 @@
               type="video/mp4">
     </video>
   </div>
+  <section class="section" style="padding: 0rem 1.5rem 2rem 1.5rem;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-three-fifths">
+          <div class="content has-text-justified">
+            <p style="font-size: 9pt">
+              * Note, we aren't playing any tricks here. The only thing we're 
+              doing is changing the size of the images. You can get the 
+              same effect by standing really really far from your screen or just 
+              squinting your eyes.
+            </p>
+            <p style="font-size: 9pt">
+              * Also note, we've thrown a few <a href="#inverse">"inverse 
+                hybrids"</a> in the above video.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <h2 class="title is-3" style="margin-top: 30px;" id="colorization">Color Hybrids</h2>
   <section class="section" style="padding: 0rem 1.5rem 2rem 1.5rem;">
@@ -217,7 +237,7 @@
               In addition, we can make hybrid images from real images. We do 
               this by taking high or low pass components from a real image, 
               and generating the missing component. Effectively, this is a method 
-              to solve inverse problems, <a href="#inverse_disc">which discuss in more detail below</a>.
+              to solve inverse problems, <a href="#inverse_disc">which we discuss in more detail below</a>.
               For more examples, please see our <a href="./inverse.html">inverse hybrids gallery</a>.
             </p>
           </div>
@@ -438,7 +458,8 @@
             \end{aligned} \]
 
             for \( \sum_i^N a_i = 1 \). Setting \( a_i = \frac{1}{N} \)
-            recovers exactly the compositional method of Liu <em>et al.</em> <a id="ref3back" href="#ref3">[3]</a>, and allows us to
+            recovers exactly the compositional method of Liu <em>et al.</em> 
+            <a id="ref3back" href="#ref3">[3]</a>, and allows us to
             produce images that align with multiple prompts. 
           </p>
         </div>
@@ -456,7 +477,7 @@
     <div class="columns is-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3 has-text-centered">Why does this work?</h2>
-        <div class="content has-text-justified">
+        <div class="content has-text-justified" style="overflow-x: auto;">
           <p>
             Diffusion models update noisy images, \(\mathbf{x}_t\), to less 
             noisy images, \(\mathbf{x}_{t-1}\), with an \(\texttt{update}(\cdot,\cdot)\) function<a href="#footnote1"><sup>1</sup></a>.
@@ -512,7 +533,7 @@
     <div class="columns is-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3 has-text-centered" id="inverse_disc">Inverse Problems</h2>
-        <div class="content has-text-justified">
+        <div class="content has-text-justified" style="overflow-x: auto;">
           <p>
             If we know what one of the components must be, perhaps from some 
             reference image \( \mathbf{x}_\text{ref} \), then we can hold that 
