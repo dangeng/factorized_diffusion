@@ -570,19 +570,19 @@
         <h2 class="title is-3 has-text-centered" id="inverse_disc">Limitations and Random Results</h2>
         <div class="content has-text-justified">
           <p>
-            One major limitation of our method is that the success rate is 
-            relatively low. Very high quality images are fairly hard to come 
-            by, and sometimes one prompt dominates the image. 
-            We attribute this fragility to the fact that our method produces 
-            images that are highly out-of-distribution for the diffusion model. 
-            In addition, there is no mechanism by which prompts associated 
-            with one component are discouraged from appearing in other 
-            components. Empirically, the success rate of our method 
-            can be improved by carefully choosing prompt pairs or by manually 
-            tuning decomposition parameters, but we leave improving the 
-            robustness of our method in general to future work. We show random
-            results for selected prompt pairs below. Many more random results 
-            can be found in our paper.
+            One major limitation of our method is that the success rate is relatively low.
+            While our method can produce decent images consistently, very high quality
+            images are rarer. We
+            attribute this fragility to the fact that our method produces images that are
+            highly out-of-distribution for the diffusion model. In addition, there is no 
+            mechanism by which prompts associated with one component are discouraged from
+            appearing in other components. Another failure case of our method is that the
+            prompt for one component may dominate the generated image. Empirically, the
+            success rate of our method can be improved by carefully choosing prompt pairs
+            or by manually tuning decomposition
+            parameters, but we leave improving the robustness of our method in general to
+            future work. We show random results for selected prompt pairs below. 
+            Many more random results can be found in our paper.
           </p>
           <img src="./static/images/random.jpg" class="center-img" style="margin-top: 3rem;"/>
         </div>
