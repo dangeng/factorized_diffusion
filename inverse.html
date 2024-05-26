@@ -36,19 +36,30 @@
 <body>
 
 
-<section class="hero" style="margin-top: 4rem;">
+<section class="hero" style="margin-top: 1rem;">
   <div class="hero-body" style="padding-bottom: 0px;">
 
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered is-three-fifths">
-          <h1 class="title is-2 publication-title">Factorized Diffusion <br>[Inverse Hybrids Gallery]</h1>
+          <h1 class="title is-2 publication-title" style="margin-bottom:0.5rem;">Factorized Diffusion</h1>
+          <h3 class="title is-4 publication-title">Inverse Hybrids Gallery</h3>
 
           <div class="content has-text-justified">
             <p>
               We can make hybrid images from existing images by extracting
               the low or high pass component from an image and generating the 
-              missing component. We are effectively solving an inverse problem.
+              missing component. This special case of our method effectively 
+              allows us to solve inverse problems with diffusion models, and 
+              has been studied in much more detail in 
+              <a href="https://arxiv.org/abs/2201.11793" target="_blank">many</a>,
+              <a href="https://arxiv.org/abs/2011.13456" target="_blank">many</a>,
+              <a href="https://arxiv.org/abs/2209.14687" target="_blank">many</a>,
+              <a href="https://arxiv.org/abs/2212.00490" target="_blank">many</a>,
+              <a href="https://arxiv.org/abs/2108.02938" target="_blank">many</a>,
+              <a href="https://arxiv.org/abs/2206.02779" target="_blank">many</a>
+              prior works. In contrast to these papers, we show it is possible to sample illusions,
+              which are quite out of distribution for these pre-trained diffusion models.
             </p>
           </div>
 
