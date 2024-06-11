@@ -518,10 +518,13 @@
               \mathbf{x} = \sum_i^N a_i\mathbf{x}
             \end{aligned} \]
 
-            for \( \sum_i^N a_i = 1 \). Setting \( a_i = \frac{1}{N} \)
-            recovers exactly the compositional method of Liu <em>et al.</em> 
-            <a id="ref3back" href="#ref3">[3]</a>, and allows us to
-            produce images that align with multiple prompts. 
+            for \( \sum_i^N a_i = 1 \). This recovers a number of prior methods exactly. 
+            For example, setting \( a_i = \frac{1}{N} \)
+            results in the <strong>compositional operator</strong> of Liu <em>et al.</em> 
+            <a id="ref3back" href="#ref3">[3]</a>. Setting \(N=3\) and \(\vec{\mathbf{a}} = (1,w,-w)\)
+            recovers the <strong>negation operator</strong> also from Liu <em>et al</em>. And finally
+            setting \(N=2\) with \(\vec{\mathbf{a}} = (1-\gamma, \gamma)\) gives us <strong>classifier free guidance</strong> 
+            and <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Negative-prompt" target="_blank"><strong>negative prompting</strong></a>.
           </p>
         </div>
       </div>
